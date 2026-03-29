@@ -23,7 +23,7 @@ module.exports = async function (context) {
         );
 
         for (const doc of messages.documents) {
-            await database.deleteDocument('YOUR_DATABASE_ID', 'YOUR_COLLECTION_ID', doc.$id);
+            await database.deleteDocument('lm_chat_db', 'chat_messages', doc.$id);
         }
 
         // ၂. ဇိုတ် File (Audio/Photo) မနွံအယုက် ၇ တ္ၚဲ
