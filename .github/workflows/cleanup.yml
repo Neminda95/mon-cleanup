@@ -1,0 +1,30 @@
+name: Cleanup Chat History
+
+on:
+  schedule:
+    - cron: '0 0 * * *' # ဇၟာပ်ညး (Midnight) ဍေံဇိုတ်ကေတ်ကေတ်
+  workflow_dispatch:      # သွက်ဂွံဍဵု Run Manual ဂွံ
+
+jobs:
+  cleanup:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install Dependencies
+        run: npm install node-appwrite
+
+      - name: Run Cleanup Script
+        env:
+          APPWRITE_ENDPOINT: ${{ secrets.APPWRITE_ENDPOINT }}
+          APPWRITE_PROJECT_ID: ${{ secrets.APPWRITE_PROJECT_ID }}
+          APPWRITE_API_KEY: ${{ secrets.APPWRITE_API_KEY }}
+          APPWRITE_DATABASE_ID: ${{ secrets.APPWRITE_DATABASE_ID }}
+          APPWRITE_COLLECTION_ID: ${{ secrets.APPWRITE_COLLECTION_ID }}
+        run: node index.js
